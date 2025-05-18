@@ -1,19 +1,19 @@
 use godot::prelude::*;
-use godot::classes::Sprite2D;
-use godot::classes::ISprite2D;
+use godot::global::*;
+use godot::classes::CharacterBody2D;
+use godot::classes::ICharacterBody2D;
 
 #[derive(GodotClass)]
-#[class(base=Sprite2D)]
+#[class(base=CharacterBody2D)]
 struct Player {
-    speed: f64,
+    speed: f32,
     angular_speed: f64,
-
-    base: Base<Sprite2D>
+    base: Base<CharacterBody2D>
 }
 
 #[godot_api]
-impl ISprite2D for Player {
-    fn init(base: Base<Sprite2D>) -> Self {
+impl ICharacterBody2D for Player {
+    fn init(base: Base<CharacterBody2D>) -> Self {
         godot_print!("Hello, World!");
 
         Self {
@@ -23,9 +23,22 @@ impl ISprite2D for Player {
         }
     }
 
-    fn physics_process(&mut self, delta: f64) {
-        let radians = (self.angular_speed * delta) as f32;
-        self.base_mut().rotate(radians);
+    fn process(&mut self, delta: f64) {
+        let mut velocity = Vector2{x:0.0, y:0.0};
+        if Input::is_action_pressed(&Input::singleton(), "move_left") {
+            velocity.x = -1.0 *self.speed; 
+            godot_print!("I am moving left");
+            godot_print!("my position is {}", self.base_mut().get_position())
+        }
+        else if Input::is_action_pressed(&Input::singleton(), "move_right"){
+            velocity.x = self.speed;
+            godot_print!("I am moving right");
+            godot_print!("my position is {}", self.base_mut().get_position())
+        } else {
+            velocity.x = 0.0;
+        }
+        self.base_mut().set_velocity(velocity);
+        self.base_mut().move_and_slide();
     }
 }
 
