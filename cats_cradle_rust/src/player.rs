@@ -7,8 +7,6 @@ use godot::classes::ICharacterBody2D;
 use godot::classes::Timer;
 
 
-use godot::classes::Label;
-
 pub const GRAVITY: f32 = 1000.0;
 pub const FALL_GRAVITY: f32 = 1500.0;
 pub const FAST_FALL_GRAVITY: f32 = 4000.0;
@@ -67,7 +65,6 @@ impl ICharacterBody2D for Player {
 
     fn process(&mut self, delta: f64) {
 
-
         let mut velocity = Vector2{x:0.0, y:0.0};
         let mut sprite = self.base.to_gd().get_node_as::<AnimatedSprite2D>("Sprite2D");
         velocity = self.base_mut().get_velocity();
@@ -87,19 +84,25 @@ impl ICharacterBody2D for Player {
         
         if moving_left {
             velocity.x = -1.0 *self.speed; 
-            sprite.set_animation("walk");
-            //godot_print!("I am moving left");
-            //godot_print!("my position is {}", self.base_mut().get_position())
+            if self.base.to_gd().is_on_floor() {
+                sprite.set_animation("walk");
+            }
         }
         else if moving_right {
             velocity.x = self.speed;
-            sprite.set_animation("walk");
+            if self.base.to_gd().is_on_floor() {
+                sprite.set_animation("walk");
+            }
             
             //godot_print!("I am moving right");
             //godot_print!("my position is {}", self.base_mut().get_position())
         } else {
             velocity.x = 0.0;
-            sprite.set_animation("rest");
+            if self.base.to_gd().is_on_floor() {
+                sprite.set_animation("rest");
+            }
+            
+           
         }
 
 
@@ -112,6 +115,8 @@ impl ICharacterBody2D for Player {
                     velocity.y = JUMP_VELOCITY;
                     self.jump_avaliable = false;
                     sprite.set_animation("jump");
+                    
+                    
                 }
                 //if the character is on a wall, regardless of if jump is avaliable, jump 
                 //unless the charecter does not have directional inputs
@@ -173,9 +178,8 @@ impl Player{
         self.input_buffer.set_one_shot(true);
         //self.base_mut().add_child(self.input_buffer);
         let mut timer = Timer::new_alloc();
-        let mut label = Label::new_alloc();
+        
         self.base.to_gd().add_child(&timer.upcast::<Node>());
-        self.base.to_gd().add_child(&label.upcast::<Node>());
     }
 }
 
