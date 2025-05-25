@@ -1,4 +1,5 @@
 
+use godot::classes::AnimatedSprite2D;
 use godot::prelude::*;
 use godot::global::*;
 use godot::classes::CharacterBody2D;
@@ -45,7 +46,7 @@ impl ICharacterBody2D for Player {
         //godot_print!("Hello, World!");
 
         let mut inst = Self {
-            speed: 1000.0,
+            speed: 200.0,
             gravity: GRAVITY,
             input_buffer: Timer::new_alloc(),
             jump_timer: Timer::new_alloc(),
@@ -68,7 +69,7 @@ impl ICharacterBody2D for Player {
 
 
         let mut velocity = Vector2{x:0.0, y:0.0};
-
+        let mut sprite = self.base.to_gd().get_node_as::<AnimatedSprite2D>("Sprite2D");
         velocity = self.base_mut().get_velocity();
 
         let input = Input::singleton();
@@ -77,24 +78,28 @@ impl ICharacterBody2D for Player {
         let moving_right:bool = Input::is_action_pressed(&Input::singleton(), "move_right") ;
         
         if moving_left{
-            godot_print!("left pressed")
+            sprite.set_flip_h(true);
         }
         if moving_right{
-        godot_print!("right pressed")
+            sprite.set_flip_h(false);
         }
 
         
         if moving_left {
             velocity.x = -1.0 *self.speed; 
-            godot_print!("I am moving left");
-            godot_print!("my position is {}", self.base_mut().get_position())
+            sprite.set_animation("walk");
+            //godot_print!("I am moving left");
+            //godot_print!("my position is {}", self.base_mut().get_position())
         }
         else if moving_right {
             velocity.x = self.speed;
-            godot_print!("I am moving right");
-            godot_print!("my position is {}", self.base_mut().get_position())
+            sprite.set_animation("walk");
+            
+            //godot_print!("I am moving right");
+            //godot_print!("my position is {}", self.base_mut().get_position())
         } else {
             velocity.x = 0.0;
+            sprite.set_animation("rest");
         }
 
 
@@ -106,6 +111,7 @@ impl ICharacterBody2D for Player {
                 if self.jump_avaliable {
                     velocity.y = JUMP_VELOCITY;
                     self.jump_avaliable = false;
+                    sprite.set_animation("jump");
                 }
                 //if the character is on a wall, regardless of if jump is avaliable, jump 
                 //unless the charecter does not have directional inputs
@@ -152,9 +158,9 @@ impl ICharacterBody2D for Player {
 
 
 
-        
+        sprite.play();
         self.base_mut().set_velocity(velocity);
-        godot_print!("x:{0}\ny:{1}", velocity.x, velocity.y);
+        //godot_print!("x:{0}\ny:{1}", velocity.x, velocity.y);
         self.base_mut().move_and_slide();
     }
 }
@@ -177,60 +183,3 @@ pub fn print_test()
 {
     println!("hello from player.rs")
 }
-/*
-pub fn jump()
-{
-    let jump_attempted: bool = Input::is_action_just_pressed(&input, "jump");
-        
-            // Jump handling
-            if jump_attempted || self.input_buffer.get_time_left() > 0.0 {
-                // jump if jump is avaliable it was either pressed or pressed in the last 0.1 seconds (INPUT_BUFFER_TIME)
-                if self.jump_avaliable {
-                    velocity.y = JUMP_VELOCITY;
-                    self.jump_avaliable = false;
-                }
-                //if the character is on a wall, regardless of if jump is avaliable, jump 
-                //unless the charecter does not have directional inputs
-                else if self.base_mut().is_on_wall() && (moving_left || moving_right) {
-                    velocity.y = WALL_JUMP_VELOCITY;
-                    //TO DO: do we want the character to jump away from the wall or in 
-                    //the direction of the input which could be into the wall
-                    velocity.x = WALL_JUMP_PUSHBACK; //* (direction / direction.abs());
-                }
-                //if jump was attempted but is not avaliable start the timer
-                //and if it becomes avaliable, then it will jump on a later loop
-                else if jump_attempted {
-                    
-                self.input_buffer.start();
-                }
-                else{
-                    //do nothing
-                }
-            }
-            //if the player releases the jump key, reduce upward velocity to 
-            //jump lower than if they held the key.
-            if input.is_action_just_released("jump"){
-                velocity.y = JUMP_VELOCITY / 4.0
-                }
-                
-            if self.base.to_gd().is_on_floor() {
-                self.jump_avaliable = true;
-                self.jump_timer.stop();
-                }
-            //if the player character is not on the floor, but a jump action
-            //is avaliable, start the timer and if the player presses jump
-            //while the timer is going, the character will jump even if 
-            //not on the ground until 0.05 Seconds (JUMP_TIMER) has passed
-            else {
-                if self.jump_avaliable{
-                    if self.jump_timer.is_stopped(){
-                        self.jump_timer.start();
-                    }
-                }
-                velocity.y += self.gravity * (delta as f32);
-            }
-                
-                
-}
-*/ */ 
-

@@ -1,7 +1,6 @@
 use godot::prelude::*;
 
 mod player;
-pub mod game_constants;
 
 struct CatsCradleExtension;
 
