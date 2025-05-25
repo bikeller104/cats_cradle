@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5sore40ih4r3"]
+[gd_scene load_steps=4 format=3 uid="uid://c5sore40ih4r3"]
 
 [ext_resource type="Texture2D" uid="uid://d2yywvnswbxbw" path="res://icon.svg" id="1_wtcfe"]
 
@@ -13,8 +13,16 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtcfe"]
+size = Vector2(128, 128)
+
 [node name="MC" type="Player"]
-position = Vector2(434, 210)
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wtcfe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wtcfe")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
