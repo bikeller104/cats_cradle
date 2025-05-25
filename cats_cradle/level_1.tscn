@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=4 uid="uid://niunck6al53h"]
+[gd_scene load_steps=5 format=4 uid="uid://niunck6al53h"]
 
 [ext_resource type="Texture2D" uid="uid://lshd4t1uejg4" path="res://Assets/oldBrickTile_SpriteSheet.png" id="1_3hls8"]
+[ext_resource type="PackedScene" uid="uid://cxryl03ck703n" path="res://door.tscn" id="2_hbghi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hbghi"]
 texture = ExtResource("1_3hls8")
@@ -128,3 +129,6 @@ sources/0 = SubResource("TileSetAtlasSource_hbghi")
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAMAAAABAAAAAAABAAMAAAACAAAAAAABAAMAAAADAAAAAAABAAMAAAAEAAAAAAABAAMAAAAFAAAAAAABAAMAAAAGAAAAAAABAAMAAAAHAAAAAAABAAMAAAAIAAAAAAABAAMAAAAJAAAAAAABAAMAAAAKAAAAAAABAAMAAAALAAAAAAABAAMAAAAMAAAAAAACAAMAAAA=")
 tile_set = SubResource("TileSet_hn12h")
+
+[node name="Door" parent="TileMapLayer" instance=ExtResource("2_hbghi")]
+position = Vector2(192, 0)
