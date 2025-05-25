@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c5sore40ih4r3" path="res://Character.tscn" id="1_k77ap"]
 
 [node name="In_game_scene" type="Node2D"]
-position = Vector2(104, -22)
+position = Vector2(103, -22)
 
 [node name="MC" parent="." instance=ExtResource("1_k77ap")]
 position = Vector2(72, -208)
