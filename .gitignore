@@ -2,3 +2,4 @@
 .godot/
 /android/
 cats_cradle_rust/target
+.vscode/
