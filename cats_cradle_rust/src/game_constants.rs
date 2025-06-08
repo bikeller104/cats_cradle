@@ -9,5 +9,6 @@ pub const WALL_JUMP_PUSHBACK: f32 = 300.0;
 
 pub const INPUT_BUFFER_TIME: f64 = 0.1;
 pub const JUMP_TIME:f64 = 0.05;
+pub const MAX_LEVEL:i32 = 2;
 
 

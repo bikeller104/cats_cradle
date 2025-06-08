@@ -1,9 +1,10 @@
 use godot::prelude::*;
 
 mod player;
+mod game;
+mod main_menu;
 pub mod game_constants;
 
-mod main_menu;
 
 struct CatsCradleExtension;
 
