@@ -55,6 +55,10 @@ impl ICharacterBody2D for Player {
 
     fn process(&mut self, delta: f64) {
 
+
+        
+        
+
         let mut velocity = Vector2{x:0.0, y:0.0};
         let mut sprite = self.base.to_gd().get_node_as::<AnimatedSprite2D>("Sprite2D");
         velocity = self.base_mut().get_velocity();
