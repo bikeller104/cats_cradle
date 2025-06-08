@@ -3,6 +3,8 @@ use godot::prelude::*;
 mod player;
 pub mod game_constants;
 
+mod main_menu;
+
 struct CatsCradleExtension;
 
 
