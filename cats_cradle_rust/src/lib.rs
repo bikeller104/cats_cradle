@@ -2,6 +2,8 @@ use godot::prelude::*;
 
 mod player;
 
+mod main_menu;
+
 struct CatsCradleExtension;
 
 
