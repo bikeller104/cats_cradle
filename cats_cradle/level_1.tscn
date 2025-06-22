@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=4 uid="uid://niunck6al53h"]
+[gd_scene load_steps=4 format=4 uid="uid://niunck6al53h"]
 
 [ext_resource type="TileSet" uid="uid://cdx4peel8kgsv" path="res://Assets/OldBrickTileset.tres" id="1_hbghi"]
 [ext_resource type="PackedScene" uid="uid://cxryl03ck703n" path="res://door.tscn" id="2_hbghi"]
+[ext_resource type="PackedScene" uid="uid://c5sore40ih4r3" path="res://Character.tscn" id="3_hn12h"]
 
 [node name="Level1" type="Node2D"]
 
@@ -11,3 +12,6 @@ tile_set = ExtResource("1_hbghi")
 
 [node name="Door" parent="." instance=ExtResource("2_hbghi")]
 position = Vector2(192, 0)
+
+[node name="MC" parent="." instance=ExtResource("3_hn12h")]
+position = Vector2(16, -24)

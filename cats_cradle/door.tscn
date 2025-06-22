@@ -145,6 +145,7 @@ animations = [{
 size = Vector2(32, 42)
 
 [node name="Door" type="StaticBody2D"]
+collision_layer = 0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -32)

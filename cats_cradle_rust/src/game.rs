@@ -33,13 +33,17 @@ impl INode2D for Game {
         let mut levels: Vec<Gd<PackedScene>> = Vec::new();
         for i in 1..=MAX_LEVEL {
             let level_path = format!("res://level_{i}.tscn");
-            let level_scene = load(&level_path);
-            
+            let level_scene:Gd<PackedScene> = load(&level_path);
+            //godot_print!("found scene {level_path}");
+            //godot_print!("level name {}", level_scene.get_name());
+            //godot_print!("level_children {}", level_scene.get_signal_list());
+
+
             levels.push(level_scene);
         }
         self.scene_list = levels;
-
         self.main_menu();
+        //self.find_children();
 
 
     }
@@ -65,11 +69,34 @@ impl Game {
                 return;
             }
         };
-        let mut entry = self.base_mut();
-        entry.get_children().iter_shared().for_each(|c| {
-            entry.remove_child(&c);
+        {
+
+            let mut entry = self.base_mut();
+            entry.get_children().iter_shared().for_each(|c| {
+                entry.remove_child(&c);
+            });
+            entry.add_child(&instance);
+        }
+
+        self.base().get_children().iter_shared().for_each(|c| {
+            godot_print!("found {}", c);
+            self.find_children(c);
         });
-        entry.add_child(&instance);
+    }
+    fn find_children(&self, &node: Gd<Node>){
+        if node.get_child_count() > 0 {
+            node.get_children().iter_shared().for_each(|c  :Gd<Node>| {
+                godot_print!("found {}", c);
+                if c.get_name() == "Door".into() {
+                    //c.connect();
+                    godot_print!("Found the door finally");
+                    return
+                }
+                self.find_children(c);
+            });
+        }
+        
+        
     }
 
 }
