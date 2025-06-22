@@ -11,7 +11,7 @@ use crate::game_constants::*;
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
-struct Player {
+pub struct Player {
     speed: f32,
     gravity: f32,
     input_buffer: Gd<Timer>,

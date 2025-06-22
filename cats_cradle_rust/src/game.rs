@@ -1,6 +1,7 @@
 use godot::prelude::*;
 use godot::{classes::{INode2D, Node2D}, global::godot_error};
 use crate::game_constants::MAX_LEVEL;
+use crate::player::Player;
 
 
 #[derive(GodotClass)]
@@ -10,18 +11,21 @@ pub struct Game {
     main_scene: Gd<PackedScene>,
     scene_list: Vec<Gd<PackedScene>>,
     current_level: usize,
+    //player_character: Gd<Player>,
 }
 
 #[godot_api]
 impl INode2D for Game {
     fn init(base: Base<Node2D>) -> Self {
         let main_scene = load("res://MainMenu.tscn");
+        //let player_node = load("res://Character.tscn");
         
         Self{
             base,
             main_scene,
             scene_list: Vec::new(),
             current_level: 0,
+            //player_character: player_node,
         }
     }
 
